@@ -46,6 +46,13 @@ else
   printf "%s\n\n" "🥳 jupyterlab is already installed"
 fi
 
+
+printf "☢️ unsetting proxy vars..."
+unset http_proxy
+unset https_proxy
+unset HTTP_PROXY
+unset HTTPS_PROXY
+
 printf "👷 Starting jupyterlab in background..."
 printf "check logs at ${LOG_PATH}"
 $JUPYTERPATH/jupyter-lab --no-browser \

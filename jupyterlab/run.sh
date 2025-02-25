@@ -38,8 +38,14 @@ fi
 
 
 printf "⚠️ setting proxy vars..."
-cat $HOME/.local/share/jupyter/kernels/aicentre/kernel.json | jq -r --arg http_proxy "$http_proxy" --arg https_proxy "$https_proxy" '.env += {"http_proxy": $http_proxy, "https_proxy": $https_proxy}'
+cat $HOME/.local/share/jupyter/kernels/aicentre/kernel.json | jq -r \
+  --arg http_proxy "$http_proxy" \
+  --arg https_proxy "$https_proxy" \
+  '.env += {"http_proxy": $http_proxy, "https_proxy": $https_proxy}' \
+  > tmp.json
 
+printf "➡️ updating kernelspec..."
+mv tmp.json $HOME/.local/share/jupyter/kernels/aicentre/kernel.json
 
 printf "👷 Starting jupyterlab in background..."
 printf "check logs at ${LOG_PATH}"

@@ -38,7 +38,7 @@ fi
 
 printf "☢️ unsetting proxy vars..."
 export http_proxy=http://$http_proxy
-export https_proxy=https://$https_proxy
+#export https_proxy=https://$https_proxy
 
 printf "👷 Starting jupyterlab in background..."
 printf "check logs at ${LOG_PATH}"

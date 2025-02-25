@@ -25,14 +25,10 @@ if ! command -v jupyter-lab > /dev/null 2>&1; then
   printf "$${BOLD}Installing jupyterlab!\n"
   case $INSTALLER in
     uv)
+      uv venv --seed
       uv pip install -q jupyterlab \
         && printf "%s\n" "🥳 jupyterlab has been installed"
       JUPYTERPATH="$HOME/.venv/bin/"
-      ;;
-    pipx)
-      pipx install jupyterlab \
-        && printf "%s\n" "🥳 jupyterlab has been installed"
-      JUPYTERPATH="$HOME/.local/bin"
       ;;
   esac
 else
@@ -48,6 +44,7 @@ unset HTTPS_PROXY
 
 printf "👷 Starting jupyterlab in background..."
 printf "check logs at ${LOG_PATH}"
+
 $JUPYTERPATH/jupyter-lab --no-browser \
   "$BASE_URL_FLAG" \
   --ServerApp.ip='*' \

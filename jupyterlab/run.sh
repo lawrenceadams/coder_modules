@@ -1,13 +1,6 @@
 #!/usr/bin/env sh
 INSTALLER=""
 check_available_installer() {
-  # check if pipx is installed
-  echo "Checking for a supported installer"
-  if command -v pipx > /dev/null 2>&1; then
-    echo "pipx is installed"
-    INSTALLER="pipx"
-    return
-  fi
   # check if uv is installed
   if command -v uv > /dev/null 2>&1; then
     echo "uv is installed"

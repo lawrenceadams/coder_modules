@@ -36,14 +36,18 @@ else
 fi
 
 
-printf "☢️ unsetting proxy vars..."
-export http_proxy=http://$http_proxy
-#export https_proxy=https://$https_proxy
+printf "⚠️ setting proxy vars..."
+cat $HOME/.venv/share/jupyter/kernels/python3/kernel.json | jq -r \
+  --arg http_proxy "$http_proxy" \
+  --arg https_proxy "$https_proxy" \
+  '.env += {"http_proxy": $http_proxy, "https_proxy": $https_proxy}' \
+  > $HOME/.venv/share/jupyter/kernels/python3/kernel.json
+
 
 printf "👷 Starting jupyterlab in background..."
 printf "check logs at ${LOG_PATH}"
 
-$JUPYTERPATH/jupyter-lab --no-browser \
+http_proxy= https_proxy= $JUPYTERPATH/jupyter-lab --no-browser \
   "$BASE_URL_FLAG" \
   --ServerApp.ip='*' \
   --ServerApp.port="${PORT}" \

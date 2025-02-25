@@ -26,7 +26,8 @@ if ! command -v jupyter-lab > /dev/null 2>&1; then
   case $INSTALLER in
     uv)
       uv venv --seed
-      uv pip install -q jupyterlab \
+      uv pip install ipykernel jupyterlab
+      uv run ipython kernel install --user --env VIRTUAL_ENV $(pwd)/.venv --name=aicentre \
         && printf "%s\n" "🥳 jupyterlab has been installed"
       JUPYTERPATH="$HOME/.venv/bin/"
       ;;
@@ -37,11 +38,11 @@ fi
 
 
 printf "⚠️ setting proxy vars..."
-cat $HOME/.venv/share/jupyter/kernels/python3/kernel.json | jq -r \
+cat $HOME/.local/share/jupyter/kernels/aicentre/kernel.json | jq -r \
   --arg http_proxy "$http_proxy" \
   --arg https_proxy "$https_proxy" \
   '.env += {"http_proxy": $http_proxy, "https_proxy": $https_proxy}' \
-  > $HOME/.venv/share/jupyter/kernels/python3/kernel.json
+  > $HOME/.local/share/jupyter/kernels/aicentre/kernel.json
 
 
 printf "👷 Starting jupyterlab in background..."
